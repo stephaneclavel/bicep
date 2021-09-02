@@ -21,4 +21,11 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   }
 }
 
+resource blob 'Microsoft.Storage/storageAccounts/blobServices/containers@2019-06-01' = {
+  name: '${stg.name}/default/logs'
+  // dependsOn will be added when the template is compiled
+}
+
 output storageId string = stg.id // output resourceId of storage account
+output computedStorageName string = stg.name
+output primaryEndpoint string = stg.properties.primaryEndpoints.blob // replacement for reference(...).*
